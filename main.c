@@ -4,6 +4,5 @@
 
 int main(void) {
     printf("Hello, World.\n");
-    FILE *fp = fopen()
     return 0;
 }

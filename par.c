@@ -48,12 +48,12 @@ int readvar(char filename[], char key[], int vtype, void *ptr) {
 
 void read_pars(struct grid *thegrid, char filename[]) {
     readvar(filename, "x1num", VAR_INT, &(thegrid->x1num));
+<<<<<<< HEAD
 
     readvar(filename, "x1ghostnum", VAR_INT, &(thegrid->x1ghostnum));
 
     readvar(filename, "x1max", VAR_DBL, &(thegrid->x1max));
     readvar(filename, "x1min", VAR_DBL, &(thegrid->x1min));
-
     readvar(filename, "t_init",  VAR_DBL, &(thegrid->t));
     readvar(filename, "f_final", VAR_DBL, &(thegrid->t_final));
     readvar(filename, "checkpoint_num",  VAR_INT, &(thegrid->checkpoint_num));
@@ -88,7 +88,7 @@ void print_pars(struct grid *thegrid) {
 
     printf("x1min: %f\n", thegrid->x1min);
     printf("x1max: %f\n", thegrid->x1max);
-    
+   
     printf("t_init: %f\n", thegrid->t);
     printf("t_final: %f\n", thegrid->t_final);
     printf("checkpoint_num: %d\n", thegrid->checkpoint_num);
