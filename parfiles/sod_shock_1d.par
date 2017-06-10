@@ -1,0 +1,36 @@
+x1num:  100
+x2num:  1
+x3num:  1
+
+x1ghostnum:  1
+x2ghostnum:  0
+x3ghostnum:  0
+
+x1min:  0.0
+x1max:  10.0
+x2min:  0.0
+x2max:  1.0
+x3min:  0.0
+x3max:  1.0
+
+t:        0.0
+t_final:  100.0
+
+checkpoint_num: 200
+
+consnum:      3
+passivenum:   1
+
+r_solver:     0
+spaceorder:   1
+rkmethod:     1
+
+bcx1inner:    0  //
+bcx1outer:    0
+bcx2inner:    0
+bcx2outer:    0
+bcx3inner:    0
+bcx3outer:    0
+
+gamma_law_coefficient:   1.333333333333
+cfl_coefficient:         0.3
