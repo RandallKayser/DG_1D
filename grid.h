@@ -6,7 +6,6 @@ enum {VAR_INT, VAR_DBL, VAR_LON};
 
 struct grid {
     int x1num;
-
     int x1ghostnum;
 
     double x1min;
@@ -15,8 +14,6 @@ struct grid {
     double t;
     double t_final;
     
-    int checkpoint_num;
-
     int consnum;
     int passivenum;
 
@@ -35,4 +32,16 @@ struct grid {
    
 };
 
+struct cell {
+    double xm;
+    double xp;
+}; 
+    
+
 #endif
+
+
+
+
+
+
