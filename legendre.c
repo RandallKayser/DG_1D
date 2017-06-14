@@ -69,7 +69,7 @@ void get_roots(double* root_matrix, int max_order, double* coefficient_matrix) {
    root_matrix[2*(max_order+1)+1] = pow(3.0,-0.5);
 
    double bounds[2];
-   double tolerance = 1.0e-11;
+   double tolerance = 1.0e-14;
    double error = 10000.0;
    double x;
    
@@ -86,12 +86,11 @@ void get_roots(double* root_matrix, int max_order, double* coefficient_matrix) {
             bounds[0] = root_matrix[(order-1)*(max_order+1)+root-1];
             bounds[1] = 1.0;
          }
-         printf("%f %f %i %i\n",bounds[0], bounds[1], order, root);
 
          x = (bounds[0] + bounds[1])/2.0;
          while(error >= tolerance) {
             error = evaluate_legendre_polynomial(x, order, max_order, coefficient_matrix) /
-               (evaluate_derivative(x, order, max_order, coefficient_matrix)+1e-2);
+               evaluate_derivative(x, order, max_order, coefficient_matrix);
             x -= error;
             error = fabs(error);
          }
@@ -101,4 +100,34 @@ void get_roots(double* root_matrix, int max_order, double* coefficient_matrix) {
    }
 }
 
-         
+void get_weights(double* weight_matrix, int max_order, double* root_matrix, double* coefficient_matrix) {
+   double xj, pj_prime;
+   for(int order=1; order<=max_order; order++) {
+      for(int i=0; i<order; i++) {
+         xj = root_matrix[order*(max_order+1)+i];
+         pj_prime = evaluate_derivative(xj, order, max_order, coefficient_matrix);
+         weight_matrix[order*(max_order+1)+i] = (2.0*order+1)/((1.0-xj*xj)*pj_prime*pj_prime);
+      }
+   }
+}
+
+
+double glq(double (*func)(double), double low_bound, double high_bound, int order, int max_order, double* weight_matrix, double* root_matrix) {
+   double result = 0.0;
+   double xi, wi;
+   for(int i=0; i<order; i++) {
+      xi = root_matrix[order*(max_order+1)+i];
+      wi = weight_matrix[order*(max_order+1)+i];
+
+      result += wi*func(xi);
+   }
+   return result;
+}
+
+
+double myfunc(double x) {
+   return sin(x*x)+x*cos(x);
+}
+
+
+
