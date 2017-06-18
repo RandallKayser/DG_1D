@@ -1,17 +1,9 @@
 x1num:  100
-x2num:  1
-x3num:  1
 
 x1ghostnum:  1
-x2ghostnum:  0
-x3ghostnum:  0
 
 x1min:  0.0
 x1max:  10.0
-x2min:  0.0
-x2max:  1.0
-x3min:  0.0
-x3max:  1.0
 
 t:        0.0
 t_final:  100.0
@@ -27,10 +19,19 @@ rkmethod:     1
 
 bcx1inner:    0  //
 bcx1outer:    0
-bcx2inner:    0
-bcx2outer:    0
-bcx3inner:    0
-bcx3outer:    0
 
 gamma_law_coefficient:   1.333333333333
 cfl_coefficient:         0.3
+
+InitPar1:     10.0         // rho_left 
+InitPar2:     1.0          // rho_right 
+InitPar3:     0.0          // v_left
+InitPar4:     0.0          // v_right
+InitPar5:     13.33333333  // p_left 
+InitPar6:     1.333333333  // p_left
+InitPar7:     0.0 
+InitPar8:     0.0
+InitPar9:     0.0
+InitPar10:    0.0
+
+

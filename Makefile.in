@@ -1,0 +1,4 @@
+INITIAL = 
+HYDRO = euler.c
+BOUNDARY =
+

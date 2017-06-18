@@ -1,17 +1,9 @@
 x1num:  
-x2num:  
-x3num:  
 
 x1ghostnum:  
-x2ghostnum:  
-x3ghostnum:  
 
 x1min:  
 x1max:  
-x2min:  
-x2max:  
-x3min:  
-x3max:  
 
 t:  
 t_final:
@@ -29,10 +21,6 @@ rkmethod:
 //bcs: 0 = none    1 = fixed    2 = zero-gradient    3 = periodic
 bcx1inner:  
 bcx1outer:  
-bcx2inner:  
-bcx2outer:  
-bcx3inner:  
-bcx3outer:  
 
 gamma_law_coefficient:  
 cfl_coefficient:  
