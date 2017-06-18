@@ -28,8 +28,6 @@ int readvar(char filename[], char key[], int vtype, void *ptr) {
 
    char *sval;
    sval = line + strlen(key) + strspn(line+strlen(key)," =\t");
-   printf("%s, %c\n", sval, *sval);
-   printf("we defined the offset string\n");
    if(vtype == VAR_DBL) {
       double val;
       printf("before sscanf\n");
