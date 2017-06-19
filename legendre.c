@@ -16,7 +16,6 @@ void get_legendre_polynomials(int max_order, long double* coefficient_matrix) {
          coefficient_matrix[(i+1)*(max_order+1)+j] = (long double)
             (2.0*i+1.0)/(i+1.0)*coefficient_matrix[i*(max_order+1)+j-1] -
             i/(i+1.0)*coefficient_matrix[(i-1)*(max_order+1)+j];
-         printf("order %i coefficient## %i coefficient %Lf\n", i+1, j, coefficient_matrix[(i+1)*(max_order+1)+j]);
       }
    }
 }
@@ -85,7 +84,6 @@ void get_roots(double* root_matrix, int max_order, long double* coefficient_matr
             error = evaluate_legendre_polynomial(x, order, max_order, coefficient_matrix) /
                evaluate_derivative(x, order, max_order, coefficient_matrix);
             x -= error;
-            printf("%.16Lf %i\n", x, order);
             error = fabsl(error);
          }
 

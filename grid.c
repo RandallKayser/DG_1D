@@ -1,3 +1,3 @@
-#include "grid.h"
+#include "structs.h"
 
 struct grid mygrid;

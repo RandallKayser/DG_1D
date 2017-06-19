@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include "structs.h"
 #include "par.h"
-#include "grid.h"
 
 enum{VAR_INT, VAR_LON, VAR_DBL};
 
@@ -22,7 +22,6 @@ int readvar(char filename[], char key[], int vtype, void *ptr) {
 
    fclose(f);
    if(!found) {
-       printf("we failed at %s\n", key);
        return 0;
    }
 
@@ -30,28 +29,20 @@ int readvar(char filename[], char key[], int vtype, void *ptr) {
    sval = line + strlen(key) + strspn(line+strlen(key)," =\t");
    if(vtype == VAR_DBL) {
       double val;
-      printf("before sscanf\n");
       sscanf(sval, "%lf", &val);
-      printf("after sscanf\n");
       *((double *)ptr) = val;
-      printf("%lf\n", val);
 
    } else if(vtype == VAR_INT) {
       int val;
-      printf("before sscanf int\n");
       sscanf(sval, "%d", &val);
-      printf("after sscanf int %d\n", val);
       *((int *) ptr) = val;
-      printf("%d\n", val);
 
    } else if(vtype == VAR_LON) {
       long val;
       sscanf(sval, "%ld", &val);
       *((long *)ptr) = val;
-      printf("%ld\n", val);
 
    } else {
-      printf("we got to string copying???\n");
       strcpy((char *) ptr, sval);
    }
 
