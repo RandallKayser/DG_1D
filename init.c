@@ -29,3 +29,21 @@ void malloc_structs(struct grid *the_grid, struct parlist *the_par_list, struct 
          the_legendre_list->root_matrix, the_legendre_list->coefficient_matrix);
 }
 
+
+void build_cells_uniform(struct grid *the_grid) {
+   int cellnum = the_grid->x1num + 2*the_grid->x1ghostnum;
+
+   the_grid->cells[0].left = NULL;
+   the_grid->cells[0].right = &(the_grid->cells[1]);
+   
+   the_grid->cells[cellnum-1].left = &(the_grid->cells[cellnum-2]);
+   the_grid->cells[cellnum-1].right = NULL;
+
+   for(int i=1; i<cellnum-1; i++) {
+      the_grid->cells[i].left = &(the_grid->cells[i-1]);
+      the_grid->cells[i].right = &(the_grid->cells[i+1]);
+   }
+
+
+void project_init_conds(struct grid *the_grid, struct parlist *the_par_list, struct legendrelist *the_legendre_list) {
+

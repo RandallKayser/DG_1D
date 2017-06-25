@@ -1,6 +1,8 @@
 #ifndef STRUCTS_INCLUDED
 #define STRUCTS_INCLUDED 1
 
+enum{RHO, VVV, PPP}
+enum{DDD, SSS, EEE}
 
 struct grid {
    int x1num;
@@ -16,7 +18,7 @@ struct grid {
    
    struct cell *cells;
 
-   double *prim;
+   double *prim; // weight_num * var_num * cell_num
    double *primrk;
 
    double *cons;
@@ -35,6 +37,9 @@ struct grid {
 
 
 struct cell {
+   struct cell *left;
+   struct cell *right;
+   int cell_label;
    double xm;
    double xp;
    double dA;
@@ -45,7 +50,7 @@ struct cell {
 struct parlist {
    double gamma_law;
    double cfl_coefficient;   
-
+   
    int checkpoint_num;
 
    double InitPar1;

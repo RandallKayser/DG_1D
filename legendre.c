@@ -121,9 +121,4 @@ double glq(double (*func)(double), double low_bound, double high_bound, int orde
 }
 
 
-double myfunc(double x) {
-   return sin(x*x) + x*cos(x);
-}
-
-
 
