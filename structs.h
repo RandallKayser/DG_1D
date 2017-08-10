@@ -1,12 +1,11 @@
 #ifndef STRUCTS_INCLUDED
 #define STRUCTS_INCLUDED 1
 
-enum{RHO, VVV, PPP}
-enum{DDD, SSS, EEE}
+enum{RHO, VVV, PPP};
+enum{DDD, SSS, EEE};
 
 struct grid {
    int x1num;
-   int x1ghostnum;
    double x1min;
    double x1max;
 

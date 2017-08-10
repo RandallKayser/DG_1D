@@ -3,6 +3,8 @@
 #include "legendre.h"
 #include "structs.h"
 #include "par.h"
+#include "init.h"
+
 int main(void) {
    
    struct grid thegrid;

@@ -4,5 +4,5 @@ long double evaluate_legendre_polynomial(long double x, int order, int max_order
 long double evaluate_derivative(long double x, int order,int max_order, long double *coefficient_matrix);
 void get_roots(double *root_matrix, int max_order, long double *coefficient_matrix);
 void get_weights(double *weight_matrix, int max_order, double *root_matrix, long double *coefficient_matrix);
-double inline __attribute__((always_inline)) glq(double (*func)(double), double low_bound, double high_bound, int order, int max_order,double *weight_matrix, double *root_matrix);
+double glq(double (*func)(double), double low_bound, double high_bound, int order, int max_order,double *weight_matrix, double *root_matrix);
 

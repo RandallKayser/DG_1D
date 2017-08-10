@@ -7,7 +7,7 @@ void malloc_structs(struct grid *the_grid, struct parlist *the_par_list, struct 
 
    read_pars(the_grid, the_par_list, file);
    
-   int cell_num = the_grid->x1num + 2*(the_grid->x1ghostnum);
+   int cell_num = the_grid->x1num;
    int var_num = the_grid->consnum + the_grid->passivenum;
    int weight_num = the_grid->spaceorder+1;
    
@@ -31,7 +31,7 @@ void malloc_structs(struct grid *the_grid, struct parlist *the_par_list, struct 
 
 
 void build_cells_uniform(struct grid *the_grid) {
-   int cellnum = the_grid->x1num + 2*the_grid->x1ghostnum;
+   int cellnum = the_grid->x1num;
 
    the_grid->cells[0].left = NULL;
    the_grid->cells[0].right = &(the_grid->cells[1]);
@@ -43,7 +43,7 @@ void build_cells_uniform(struct grid *the_grid) {
       the_grid->cells[i].left = &(the_grid->cells[i-1]);
       the_grid->cells[i].right = &(the_grid->cells[i+1]);
    }
-
+}
 
 void project_init_conds(struct grid *the_grid, struct parlist *the_par_list, struct legendrelist *the_legendre_list) {
-
+}

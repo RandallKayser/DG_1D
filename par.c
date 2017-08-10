@@ -51,8 +51,6 @@ int readvar(char filename[], char key[], int vtype, void *ptr) {
 
 void read_pars(struct grid *the_grid, struct parlist *the_par_list, char filename[]) {
     readvar(filename, "x1num:", VAR_INT, &(the_grid->x1num));
-    readvar(filename, "x1ghostnum:", VAR_INT, &(the_grid->x1ghostnum));
-    
     readvar(filename, "x1max:", VAR_DBL, &(the_grid->x1max));
     readvar(filename, "x1min:", VAR_DBL, &(the_grid->x1min));
 
@@ -89,9 +87,6 @@ void read_pars(struct grid *the_grid, struct parlist *the_par_list, char filenam
 void print_pars(struct grid *the_grid, struct parlist *the_par_list) {
     printf("===Input Parameters===\n");
     printf("x1num: %d\n", the_grid->x1num);
-
-    printf("x1ghostnum: %d\n", the_grid->x1ghostnum);
-
     printf("x1min: %f\n", the_grid->x1min);
     printf("x1max: %f\n", the_grid->x1max);
    
