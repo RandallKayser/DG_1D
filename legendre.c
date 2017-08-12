@@ -121,4 +121,23 @@ double glq(double (*func)(double), double low_bound, double high_bound, int orde
 }
 
 
+double basis_func_glq(double (*func)(struct grid *, double), int basis_num, double low_bound, double high_bound, int order, int max_order, struct grid *the_grid, struct legendrelist *the_legendre_list) {
+   double result = 0.0;
+   double xi, wi;
+   double scale = (high_bound-low_bound)/2.0;
+   double shift = (high_bound+low_bound)/2.0;
+   double leg_poly;
+   long double *coefficientmatrix = the_legendre_list->coefficient_matrix;
+   double *rootmatrix = the_legendre_list->root_matrix;
+   double *weightmatrix = the_legendre_list->weight_matrix;
+   for(int i=0; i<order; i++) {
+      xi = rootmatrix[order*(max_order+1)+i];
+      wi = weightmatrix[order*(max_order+1)+i];
+      leg_poly = evaluate_legendre_polynomial(xi, basis_num, max_order, coefficientmatrix);
 
+      result += wi*func(the_grid, scale*xi+shift) * leg_poly;
+   }
+
+   result *= scale;
+   return result;
+}

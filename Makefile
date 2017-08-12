@@ -1,20 +1,30 @@
 CC = gcc
-CFLAGS = -O3 -Wall -c
-LDFLAGS = -O3
-INCLUDE = -lm
+CFLAGS =-O3 -Wall -c
+LDFLAGS =-O3
+INCLUDE =-lm
 MAKE_OPTIONS = $(PWD)/Makefile.in
 include $(MAKE_OPTIONS)
 HEAD = structs.h init.h par.h legendre.h
-OBJ = grid.o init.o legendre.o main.o par.o
+OBJ = init.o legendre.o main.o par.o $(INITIAL).o
 default: dg1d
 
 dg1d: $(OBJ)
-	$(CC) $(LDFLAGS) $^ -o $@ $(INCLUDE)
+	$(CC) $(LDFLAGS) $(INCLUDE) $^ -o $@
 
 %.o: %.c $(HEAD)
-	$(CC) $(CFLAGS) $< -o $@ $(INCLUDE)
+	$(CC) $(CFLAGS) $(INCLUDE) $< -o $@
+
+$(INITIAL).o: Initial/$(INITIAL).c $(HEAD)
+	$(CC) $(CFLAGS) $(INCLUDE) Initial/$(INITIAL).c
+
+dg1d: $(OBJ)
+	$(CC) $(LDFLAGS) $(INCLUDE) $^ -o $@
 
 .PHONY: clean
 
 clean:
 	rm -f *.o dg1d
+
+.PHONY: echo
+echo:
+	echo $(INITIAL)

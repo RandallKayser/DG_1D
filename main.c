@@ -13,5 +13,7 @@ int main(void) {
 
    malloc_structs(&thegrid, &theparlist, &thelegendrelist);
    print_pars(&thegrid, &theparlist);
-
+   build_cells_uniform(&thegrid);
+   print_cells(&thegrid);
+   project_init_conds(&thegrid, &theparlist, &thelegendrelist);
 }

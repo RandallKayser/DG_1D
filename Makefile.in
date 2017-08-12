@@ -1,4 +1,4 @@
-INITIAL = 
-HYDRO = euler.c
-BOUNDARY =
+INITIAL     = sod_shock_1d 
+HYDRO       = euler.c
+BOUNDARY    =
 
