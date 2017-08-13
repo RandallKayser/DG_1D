@@ -12,13 +12,13 @@ dg1d: $(OBJ)
 	$(CC) $(LDFLAGS) $(INCLUDE) $^ -o $@
 
 %.o: %.c $(HEAD)
-	$(CC) $(CFLAGS) $(INCLUDE) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@ $(INCLUDE)
 
 $(INITIAL).o: Initial/$(INITIAL).c $(HEAD)
 	$(CC) $(CFLAGS) $(INCLUDE) Initial/$(INITIAL).c
 
 dg1d: $(OBJ)
-	$(CC) $(LDFLAGS) $(INCLUDE) $^ -o $@
+	$(CC) $(LDFLAGS) $^ -o $@ $(INCLUDE)
 
 .PHONY: clean
 

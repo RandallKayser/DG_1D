@@ -75,7 +75,26 @@ void print_cells(struct grid *the_grid) {
       printf("Its Dimensions are: (xm, xp, dA, dV) = (%f, %f, %f, %f)\n",
          the_grid->cells[i].xm, the_grid->cells[i].xp,
          the_grid->cells[i].dA, the_grid->cells[i].dV);
-      printf("\n\n\n");
+      printf("\n");
+      for(int q=0; q<3; q++) {
+         switch(q) {
+            case 0:
+               printf("The DDD weights are: (");
+               break;
+            case 1:
+               printf("The SSS weights are: (");
+               break;
+            case 2:
+               printf("The EEE weights are: (");
+               break;
+         }
+         for(int weight=0; weight<the_grid->spaceorder; weight++) {
+            printf("%f, ", the_grid->prim[the_grid->cells[i].cell_label+
+               q*(the_grid->spaceorder+1)+weight]);
+         }
+         printf("%f)\n\n\n", the_grid->prim[the_grid->cells[i].cell_label+
+            q*(the_grid->spaceorder+1)+the_grid->spaceorder]);
+      }
    }
 }
 double DDD_init(struct grid *the_grid, double x) {
