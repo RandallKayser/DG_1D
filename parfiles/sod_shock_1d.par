@@ -17,7 +17,7 @@ rkmethod:     1
 bcx1inner:    0  //
 bcx1outer:    0
 
-gamma_law_coefficient:   1.333333333333
+gamma_law_coefficient:   1.666666666666
 cfl_coefficient:         0.3
 
 InitPar1:     10.0         // rho_left 

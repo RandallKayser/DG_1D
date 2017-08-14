@@ -24,7 +24,7 @@ struct grid {
    double *consrk;
 
    int r_solver;
-   int spaceorder;
+   int spaceorder; // order of truncation error
    int rkmethod;
 
    int bc_x1_inner;
@@ -66,7 +66,7 @@ struct parlist {
 
 
 struct legendrelist {
-   long double *coefficient_matrix;
+   double *coefficient_matrix;
    double *root_matrix;
    double *weight_matrix;
 };

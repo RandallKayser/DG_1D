@@ -80,6 +80,7 @@ void read_pars(struct grid *the_grid, struct parlist *the_par_list, char filenam
     readvar(filename, "InitPar10:",    VAR_DBL, &(the_par_list->InitPar10));
 
     readvar(filename, "gamma_law:",           VAR_DBL, &(the_par_list->gamma_law));
+   readvar(filename, "gamma_law:",           VAR_DBL, &(the_grid->gamma_law));
     readvar(filename, "cfl_coefficient:",     VAR_DBL, &(the_par_list->cfl_coefficient));
     
 }

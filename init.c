@@ -20,7 +20,7 @@ void malloc_structs(struct grid *the_grid, struct parlist *the_par_list, struct 
    the_grid->cons = malloc(sizeof(double)*weight_num*var_num*cell_num);
    the_grid->consrk = malloc(sizeof(double)*weight_num*var_num*cell_num);
 
-   the_legendre_list->coefficient_matrix = malloc(sizeof(long double)*weight_num*weight_num);
+   the_legendre_list->coefficient_matrix = malloc(sizeof(double)*weight_num*weight_num);
    the_legendre_list->root_matrix = malloc(sizeof(double)*weight_num*weight_num);
    the_legendre_list->weight_matrix = malloc(sizeof(double)*weight_num*weight_num);
    
@@ -102,7 +102,7 @@ double DDD_init(struct grid *the_grid, double x) {
 }
 
 double SSS_init(struct grid *the_grid, double x) {
-   return rho_init(the_grid, x) * vvv_init(the_grid, x);
+   return rho_init(the_grid, x)*vvv_init(the_grid, x);
 }
 
 double EEE_init(struct grid *the_grid, double x) {
@@ -110,7 +110,6 @@ double EEE_init(struct grid *the_grid, double x) {
    double vvv = vvv_init(the_grid, x);
    double ppp = ppp_init(the_grid, x);
    double gam = the_grid->gamma_law;
-
    return .5*rho*vvv*vvv + ppp/(gam-1.0);
 }
 

@@ -1,4 +1,4 @@
-x1num:  30
+x1num:  11
 x1min:  0.0
 x1max:  10.0
 
@@ -11,13 +11,15 @@ consnum:      3
 passivenum:   1
 
 r_solver:     0
+
+//spaceord is the order of the highest polynomial in basis (dumb!)
 spaceorder:   1
 rkmethod:     1
 
 bcx1inner:    0
 bcx1outer:    0
 
-gamma_law:   1.333333333333
+gamma_law:   1.33333333333
 cfl_coefficient:         0.3
 
 InitPar1:     10.0
