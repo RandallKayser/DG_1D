@@ -66,7 +66,7 @@ struct parlist {
 
 
 struct legendrelist {
-   double *coefficient_matrix;
+   long double *coefficient_matrix;
    double *root_matrix;
    double *weight_matrix;
 };

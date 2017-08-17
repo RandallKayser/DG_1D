@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "legendre.h"
+#define sign(X) ((X > 0) - (X < 0))
 
-void get_legendre_polynomials(int max_order, double* coefficient_matrix) {
+void get_legendre_polynomials(int max_order, long double* coefficient_matrix) {
    for(int i=0; i<max_order*max_order; i++) {
       coefficient_matrix[i] = 0.0;
    }
@@ -11,9 +12,12 @@ void get_legendre_polynomials(int max_order, double* coefficient_matrix) {
    coefficient_matrix[0] = 1.0;
    coefficient_matrix[max_order+1] = 1.0;
    
-   for(int i=1; i<max_order; i++) {
-      for(int j=0; j<=i+1; j++) {
-         coefficient_matrix[(i+1)*max_order+j] = (double)
+   for(int i=1; i<max_order-1; i++) {
+      coefficient_matrix[(i+1)*max_order] = 
+         (long double) -i/(i+1)*coefficient_matrix[(i-1)*max_order];
+
+      for(int j=1; j<=i+1; j++) {
+         coefficient_matrix[(i+1)*max_order+j] = (long double)
             (2.0*i+1.0)/(i+1.0)*coefficient_matrix[i*max_order+j-1] -
             i/(i+1.0)*coefficient_matrix[(i-1)*max_order+j];
       }
@@ -21,37 +25,77 @@ void get_legendre_polynomials(int max_order, double* coefficient_matrix) {
 }
 
 
-void normalize_polynomials(int max_order, double* coefficient_matrix) {
-   for(int i=0; i<=max_order; i++) {
-      for(int j=0; j<=i+1; j++) {
-         coefficient_matrix[i*max_order+j] /= sqrt(2.0/(2.0*i+1.0));
+void normalize_polynomials(int max_order, long double* coefficient_matrix) {
+   for(int i=0; i<max_order; i++) {
+      for(int j=0; j<=i; j++) {
+         coefficient_matrix[i*max_order+j] /= sqrtl(2.0/(2.0*i+1.0));
       }
    }
 }
 
 
-double evaluate_legendre_polynomial(double x, int order, int max_order, double* coefficient_matrix) {
-   double result=coefficient_matrix[order*max_order+order];
+long double evaluate_legendre_polynomial(long double x, int order, int max_order, long double* coefficient_matrix) {
+   long double result=coefficient_matrix[order*max_order+order];
 
-   for(int i=order; i>=0; i--) {
-      result = result*x + coefficient_matrix[order*max_order+i];
+   for(int i=order; i>0; i--) {
+      result = result*x + coefficient_matrix[order*max_order+i-1];
    }
 
    return result;
 }
 
 
-double evaluate_derivative(double x, int order,int max_order, double* coefficient_matrix) {
-   double result = order*coefficient_matrix[order*max_order+order+1];
-   for(int i=order; i>=1; i--) {
-      result = result*x + i*coefficient_matrix[order*max_order+i];
+long double evaluate_derivative(long double x, int order, int max_order, long  double* coefficient_matrix) {
+   long double result = order*coefficient_matrix[order*max_order+order];
+   for(int i=order; i>1; i--) {
+      result = result*x + i*coefficient_matrix[order*max_order+i-1];
    }
 
    return result;
 }
 
 
-void get_roots(double* root_matrix, int max_order, double* coefficient_matrix) {
+void bisection(double *bounds, int root, int order, int max_order, long double *coefficient_matrix, double* root_matrix) {
+   double high = bounds[1];
+   double low = bounds[0];
+   double result = (bounds[1]+bounds[0])/2.0;
+
+   double high_val = evaluate_legendre_polynomial(high, order, max_order, coefficient_matrix);
+   double low_val = evaluate_legendre_polynomial(low, order, max_order, coefficient_matrix);;
+   double result_val = evaluate_legendre_polynomial(result, order, max_order, coefficient_matrix);
+
+   double high_sign = (double) sign(high_val);
+   double low_sign = (double) sign(low_val);
+   double result_sign = sign(result_val);
+   
+   double tolerance = 1.0e-14;
+   
+   while(high-low > tolerance) {
+      if(high_sign == low_sign) {
+         printf("no root???\n");
+      }
+      
+
+      if(result_sign == high_sign) {
+         high = result;
+         high_val = evaluate_legendre_polynomial(result, order, max_order, coefficient_matrix);
+         high_sign = sign(high_val);
+
+      } else if(result_sign == low_sign) {
+         low = result;
+         low_val = evaluate_legendre_polynomial(result, order, max_order, coefficient_matrix);
+         low_sign = sign(low_val);
+      }
+
+      result = (high + low)/2.0;
+      result_val = evaluate_legendre_polynomial(result, order, max_order, coefficient_matrix);
+      result_sign = (double) sign(result_val);
+   }
+   root_matrix[order*max_order + root] = result;
+}
+
+
+void get_roots(double* root_matrix, int max_order, long double* coefficient_matrix) {
    for(int i=0; i<max_order*max_order; i++) {
       root_matrix[i] = 2.0;
    }
@@ -64,10 +108,12 @@ void get_roots(double* root_matrix, int max_order, double* coefficient_matrix) {
    double tolerance = 1.0e-14;
    double error = 10000.0;
    double x;
+   int iterations=0;
    
-   for(int order=3; order<=max_order; order++) {
+   for(int order=3; order<max_order; order++) {
       for(int root=0; root<order; root++) {
          error = 10000.0;
+         iterations=0;
          if(root!=0 && root!=order-1) {
             bounds[0] = root_matrix[(order-1)*max_order+root-1];
             bounds[1] = root_matrix[(order-1)*max_order+root];
@@ -80,19 +126,25 @@ void get_roots(double* root_matrix, int max_order, double* coefficient_matrix) {
          }
 
          x = (bounds[0] + bounds[1])/2.0;
-         while(error >= tolerance) {
+         printf("%f\n", x);
+         while(error >= tolerance && iterations<=200) {
             error = evaluate_legendre_polynomial(x, order, max_order, coefficient_matrix) /
                evaluate_derivative(x, order, max_order, coefficient_matrix);
             x -= error;
+            printf("%f\n", x); 
             error = fabsl(error);
+            iterations++;
          }
-
-         root_matrix[order*max_order+root] = x;
+         if(iterations<200) {
+            root_matrix[order*max_order+root] = x;
+         } else {
+            bisection(bounds, root, order, max_order, coefficient_matrix, root_matrix);
+         }
       }
    }
 }
 
-void get_weights(double *weight_matrix, int max_order, double *root_matrix, double *coefficient_matrix) {
+void get_weights(double *weight_matrix, int max_order, double *root_matrix, long double *coefficient_matrix) {
    double xj, pj_prime;
    for(int order=1; order<=max_order; order++) {
       for(int i=0; i<order; i++) {
@@ -127,7 +179,7 @@ double basis_func_glq(double (*func)(struct grid *, double), int basis_num, doub
    double scale = (high_bound-low_bound)/2.0;
    double shift = (high_bound+low_bound)/2.0;
    double leg_poly;
-   double *coefficientmatrix = the_legendre_list->coefficient_matrix;
+   long double *coefficientmatrix = the_legendre_list->coefficient_matrix;
    double *rootmatrix = the_legendre_list->root_matrix;
    double *weightmatrix = the_legendre_list->weight_matrix;
    for(int i=0; i<order; i++) {

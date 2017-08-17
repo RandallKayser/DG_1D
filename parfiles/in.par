@@ -13,7 +13,7 @@ passivenum:   1
 r_solver:     0
 
 //spaceord is the order of the highest polynomial in basis (dumb!)
-spaceorder:   1
+spaceorder:   10
 rkmethod:     1
 
 bcx1inner:    0
